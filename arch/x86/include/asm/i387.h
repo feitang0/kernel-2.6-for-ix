@@ -265,6 +265,17 @@ static inline int restore_fpu_checking(struct task_struct *tsk)
 }
 
 /*
+ * Software FPU state helpers. Careful: these need to
+ * be preemption protection *and* they need to be
+ * properly paired with the CR0.TS changes!
+ */
+static inline int __thread_has_fpu(struct task_struct *tsk)
+{
+	// return tsk->thread.has_fpu;
+	return 0;	// Compromise strategy because thread_struct has no member named has_fpu
+}
+
+/*
  * Signal frame handlers...
  */
 extern int save_i387_xstate(void __user *buf);
