@@ -4,6 +4,8 @@
 #include <asm/debugreg.h>
 #include <asm/siginfo.h>			/* TRAP_TRACE, ... */
 
+#include <linux/kprobes.h>
+
 #ifdef CONFIG_X86_32
 #define dotraplinkage
 #else
