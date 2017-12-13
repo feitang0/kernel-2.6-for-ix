@@ -100,7 +100,20 @@ extern void perf_events_lapic_init(void);
 
 #define PERF_EVENT_INDEX_OFFSET			0
 
+struct perf_guest_switch_msr {
+	unsigned msr;
+	u64 host, guest;
+};
+extern struct perf_guest_switch_msr *perf_guest_get_msrs(int *nr);
+
 #else
+
+static inline perf_guest_switch_msr *perf_guest_get_msrs(int *nr)
+{
+	*nr = 0;
+	return NULL;
+}
+
 static inline void init_hw_perf_events(void)		{ }
 static inline void perf_events_lapic_init(void)	{ }
 #endif
