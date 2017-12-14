@@ -2401,3 +2401,12 @@ void hw_perf_event_setup_online(int cpu)
 {
 	init_debug_store_on_cpu(cpu);
 }
+
+struct perf_guest_switch_msr *perf_guest_get_msrs(int *nr)
+{
+	if (x86_pmu.guest_get_msrs)
+		return x86_pmu.guest_get_msrs(nr);
+	*nr = 0;
+	return NULL;
+}
+EXPORT_SYMBOL_GPL(perf_guest_get_msrs);
