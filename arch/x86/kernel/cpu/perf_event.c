@@ -102,6 +102,11 @@ struct x86_pmu {
 	u64		intel_ctrl;
 	void		(*enable_bts)(u64 config);
 	void		(*disable_bts)(void);
+
+	/*
+	 * Intel host/guest support (KVM)
+	 */
+	struct perf_guest_switch_msr *(*guest_get_msrs)(int *nr);
 };
 
 static struct x86_pmu x86_pmu __read_mostly;
