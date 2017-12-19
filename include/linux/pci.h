@@ -626,6 +626,9 @@ extern void pci_remove_bus_device(struct pci_dev *dev);
 extern void pci_stop_bus_device(struct pci_dev *dev);
 void pci_setup_cardbus(struct pci_bus *bus);
 extern void pci_sort_breadthfirst(void);
+#define dev_is_pci(d) ((d)->bus == &pci_bus_type)
+#define dev_is_pf(d) ((dev_is_pci(d) ? to_pci_dev(d)->is_physfn : false))
+#define dev_num_vf(d) ((dev_is_pci(d) ? pci_num_vf(to_pci_dev(d)) : 0))
 
 /* Generic PCI functions exported to card drivers */
 
@@ -1167,6 +1170,10 @@ static inline struct pci_dev *pci_get_slot(struct pci_bus *bus,
 static inline struct pci_dev *pci_get_bus_and_slot(unsigned int bus,
 						unsigned int devfn)
 { return NULL; }
+
+#define dev_is_pci(d) (false)
+#define dev_is_pf(d) (false)
+#define dev_num_vf(d) (0)
 
 #endif /* CONFIG_PCI */
 
